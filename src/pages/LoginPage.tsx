@@ -1,8 +1,8 @@
-import { isAxiosError } from 'axios'
 import { useState, type SubmitEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import AuthLayout from '../layouts/AuthLayout'
+import { getErrorCode } from '../utils/getErrorCode'
 
 const INVALID_CREDENTIALS_MESSAGE = 'E-mail ou senha incorretos. Verifique os dados e tente novamente.'
 const GENERIC_ERROR_MESSAGE = 'Não foi possível entrar agora. Tente novamente em instantes.'
@@ -25,7 +25,7 @@ function LoginPage() {
       await login(email, password)
       navigate('/tasks', { replace: true })
     } catch (err) {
-      const errorCode = isAxiosError(err) ? err.response?.data?.errorCode : undefined
+      const errorCode = getErrorCode(err)
       setError(errorCode === 'INVALID_CREDENTIALS' ? INVALID_CREDENTIALS_MESSAGE : GENERIC_ERROR_MESSAGE)
     } finally {
       setIsSubmitting(false)
