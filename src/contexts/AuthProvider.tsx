@@ -6,30 +6,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
+  function applySession(accessToken: string | null, sessionUser: User | null) {
+    setAccessToken(accessToken)
+    setUser(sessionUser)
+  }
+
   useEffect(() => {
     api
       .post('/auth/refresh')
-      .then(({ data }) => {
-        setAccessToken(data.accessToken)
-        setUser(data.user)
-      })
-      .catch(() => {
-        setAccessToken(null)
-        setUser(null)
-      })
+      .then(({ data }) => applySession(data.accessToken, data.user))
+      .catch(() => applySession(null, null))
       .finally(() => setIsLoading(false))
   }, [])
 
   async function login(email: string, password: string) {
     const { data } = await api.post('/auth/login', { email, password })
-    setAccessToken(data.accessToken)
-    setUser(data.user)
+    applySession(data.accessToken, data.user)
   }
 
   async function logout() {
-    await api.post('/auth/logout')
-    setAccessToken(null)
-    setUser(null)
+    try {
+      await api.post('/auth/logout')
+    } finally {
+      applySession(null, null)
+    }
   }
 
   return (
