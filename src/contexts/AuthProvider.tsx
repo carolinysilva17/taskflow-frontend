@@ -24,6 +24,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     applySession(data.accessToken, data.user)
   }
 
+  async function register(name: string, email: string, password: string) {
+    await api.post('/auth/register', { name, email, password })
+    await login(email, password)
+  }
+
   async function logout() {
     try {
       await api.post('/auth/logout')
@@ -33,7 +38,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: user !== null, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: user !== null, isLoading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   )
