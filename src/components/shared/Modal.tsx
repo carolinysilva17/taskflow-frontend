@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react'
+import { useEffect, useRef, type MouseEvent, type ReactNode } from 'react'
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -53,15 +53,20 @@ function Modal({ labelledBy, onClose, children }: ModalProps) {
     }
   }, [onClose])
 
+  function handleOverlayClick(event: MouseEvent<HTMLDivElement>) {
+    if (event.target === event.currentTarget) {
+      onClose()
+    }
+  }
+
   return (
-    <div className="modal-overlay" role="presentation" onClick={onClose}>
+    <div className="modal-overlay" role="presentation" onClick={handleOverlayClick}>
       <div
         ref={dialogRef}
         className="modal-dialog"
         role="dialog"
         aria-modal="true"
         aria-labelledby={labelledBy}
-        onClick={(event) => event.stopPropagation()}
       >
         {children}
       </div>
