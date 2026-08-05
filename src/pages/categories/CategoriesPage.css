@@ -1,0 +1,29 @@
+.categories-page {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.categories-panel {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 28px;
+}
+
+.categories-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.categories-header h1 {
+  color: var(--accent);
+}
+
+.categories-loading {
+  color: var(--ink-secondary);
+  font-size: 14px;
+  margin-top: 28px;
+}

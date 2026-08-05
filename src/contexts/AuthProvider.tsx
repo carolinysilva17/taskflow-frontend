@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { api, setAccessToken } from '../services/api'
+import { setAccessToken } from '../services/api'
+import * as authService from '../services/authService'
 import { AuthContext, type User } from './AuthContext'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -12,26 +13,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    api
-      .post('/auth/refresh')
-      .then(({ data }) => applySession(data.accessToken, data.user))
+    authService
+      .refreshSession()
+      .then((session) => applySession(session.accessToken, session.user))
       .catch(() => applySession(null, null))
       .finally(() => setIsLoading(false))
   }, [])
 
   async function login(email: string, password: string) {
-    const { data } = await api.post('/auth/login', { email, password })
-    applySession(data.accessToken, data.user)
+    const session = await authService.login(email, password)
+    applySession(session.accessToken, session.user)
   }
 
   async function register(name: string, email: string, password: string) {
-    await api.post('/auth/register', { name, email, password })
+    await authService.register(name, email, password)
     await login(email, password)
   }
 
   async function logout() {
     try {
-      await api.post('/auth/logout')
+      await authService.logout()
+    } catch {
+      // A sessão local é sempre encerrada, mesmo se a chamada ao servidor falhar.
     } finally {
       applySession(null, null)
     }

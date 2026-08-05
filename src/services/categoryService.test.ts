@@ -1,6 +1,15 @@
 import { describe, expect, it, vi } from 'vitest'
+import { axiosError } from '../test-utils/axiosError'
 import { api } from './api'
-import { createCategory, deleteCategory, listCategories, updateCategory } from './categoryService'
+import {
+  CATEGORY_COLOR_PALETTE,
+  createCategory,
+  deleteCategory,
+  getCategoryErrorMessage,
+  listCategories,
+  pickAvailableColor,
+  updateCategory,
+} from './categoryService'
 
 vi.mock('./api', () => ({
   api: {
@@ -50,5 +59,43 @@ describe('categoryService', () => {
     await deleteCategory(1)
 
     expect(api.delete).toHaveBeenCalledWith('/categories/1')
+  })
+})
+
+describe('pickAvailableColor', () => {
+  it('returns the first palette color not already used', () => {
+    expect(pickAvailableColor([CATEGORY_COLOR_PALETTE[0]])).toBe(CATEGORY_COLOR_PALETTE[1])
+  })
+
+  it('falls back to the first color when the whole palette is used', () => {
+    expect(pickAvailableColor(CATEGORY_COLOR_PALETTE)).toBe(CATEGORY_COLOR_PALETTE[0])
+  })
+})
+
+describe('getCategoryErrorMessage', () => {
+  it('maps CATEGORY_NAME_DUPLICATE to a specific message', () => {
+    expect(getCategoryErrorMessage(axiosError('CATEGORY_NAME_DUPLICATE'), 'fallback')).toBe(
+      'Já existe uma categoria com esse nome.',
+    )
+  })
+
+  it('maps CATEGORY_COLOR_DUPLICATE to a specific message', () => {
+    expect(getCategoryErrorMessage(axiosError('CATEGORY_COLOR_DUPLICATE'), 'fallback')).toBe(
+      'Já existe uma categoria com essa cor.',
+    )
+  })
+
+  it('maps CATEGORY_HAS_TASKS to a specific message', () => {
+    expect(getCategoryErrorMessage(axiosError('CATEGORY_HAS_TASKS'), 'fallback')).toBe(
+      'Essa categoria possui tarefas vinculadas e não pode ser excluída.',
+    )
+  })
+
+  it('returns the fallback for unknown error codes', () => {
+    expect(getCategoryErrorMessage(axiosError('SOMETHING_ELSE'), 'fallback')).toBe('fallback')
+  })
+
+  it('returns the fallback for non-axios errors', () => {
+    expect(getCategoryErrorMessage(new Error('network down'), 'fallback')).toBe('fallback')
   })
 })
