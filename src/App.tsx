@@ -1,12 +1,12 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import ProtectedRoute from './components/ProtectedRoute'
+import ProtectedRoute from './components/shared/ProtectedRoute'
 import MainLayout from './layouts/MainLayout'
-import CategoriesPage from './pages/CategoriesPage'
-import DashboardPage from './pages/DashboardPage'
-import LoginPage from './pages/LoginPage'
-import NotFoundPage from './pages/NotFoundPage'
-import RegisterPage from './pages/RegisterPage'
-import TasksPage from './pages/TasksPage'
+import CategoriesPage from './pages/categories/CategoriesPage'
+import DashboardPage from './pages/dashboard/DashboardPage'
+import LoginPage from './pages/login/LoginPage'
+import NotFoundPage from './pages/not-found/NotFoundPage'
+import RegisterPage from './pages/register/RegisterPage'
+import TasksPage from './pages/tasks/TasksPage'
 
 function App() {
   return (

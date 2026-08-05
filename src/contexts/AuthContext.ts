@@ -1,10 +1,7 @@
 import { createContext, useContext } from 'react'
+import type { User } from '../services/authService'
 
-export interface User {
-  id: number
-  name: string
-  email: string
-}
+export type { User }
 
 export interface AuthContextValue {
   user: User | null

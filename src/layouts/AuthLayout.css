@@ -13,12 +13,21 @@
 .auth-panel {
   position: relative;
   overflow: hidden;
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--nav-bg);
+  color: var(--nav-ink);
   display: none;
   flex-direction: column;
   justify-content: space-between;
   padding: 48px;
+}
+
+.auth-panel .auth-brand {
+  color: var(--accent);
+}
+
+.auth-panel .auth-tagline,
+.auth-panel .auth-panel-bottom {
+  color: var(--nav-ink-secondary);
 }
 
 @media (min-width: 860px) {

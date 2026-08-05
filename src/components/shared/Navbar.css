@@ -4,8 +4,8 @@
   gap: 28px;
   padding: 0 24px;
   height: 60px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface-raised);
+  background: var(--nav-bg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.35);
   position: sticky;
   top: 0;
   z-index: 20;
@@ -13,7 +13,7 @@
 
 .navbar .brand-mark {
   font-size: 19px;
-  color: var(--ink);
+  color: var(--nav-ink);
 }
 
 .navlinks {
@@ -30,7 +30,7 @@
   display: inline-flex;
   font-size: 14px;
   font-weight: 600;
-  color: var(--ink-secondary);
+  color: var(--nav-ink-secondary);
   padding: 8px 12px;
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -40,13 +40,13 @@
 }
 
 .navlink:hover {
-  color: var(--ink);
-  background: var(--surface-sunken);
+  color: var(--nav-ink);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .navlink.active {
-  color: var(--accent-soft-ink);
-  background: var(--accent-soft);
+  color: var(--accent);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .navuser {
@@ -54,8 +54,17 @@
   align-items: center;
   gap: 10px;
   font-size: 13px;
-  color: var(--ink-secondary);
+  color: var(--nav-ink-secondary);
   flex: none;
+}
+
+.navuser .btn-ghost {
+  color: var(--nav-ink-secondary);
+}
+
+.navuser .btn-ghost:hover {
+  color: var(--nav-ink);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .navuser .avatar {

@@ -24,6 +24,21 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+const PUBLIC_AUTH_ENDPOINTS = ['/auth/login', '/auth/register', '/auth/refresh']
+
+function isPublicAuthEndpoint(url: string | undefined) {
+  if (!url) {
+    return false
+  }
+
+  try {
+    const { pathname } = new URL(url, API_URL)
+    return PUBLIC_AUTH_ENDPOINTS.includes(pathname)
+  } catch {
+    return PUBLIC_AUTH_ENDPOINTS.includes(url)
+  }
+}
+
 type PendingRequestCallback = (token: string | null) => void
 
 let isRefreshing = false
@@ -43,8 +58,11 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config
 
-    const isRefreshCall = originalRequest?.url === '/auth/refresh'
-    const shouldRetry = Boolean(originalRequest) && error.response?.status === 401 && !originalRequest._retry && !isRefreshCall
+    const shouldRetry =
+      Boolean(originalRequest) &&
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !isPublicAuthEndpoint(originalRequest?.url)
 
     if (!shouldRetry) {
       return Promise.reject(error)

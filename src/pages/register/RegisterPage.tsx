@@ -1,10 +1,9 @@
 import { useState, type SubmitEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
-import AuthLayout from '../layouts/AuthLayout'
-import { getErrorCode } from '../utils/getErrorCode'
+import { useAuth } from '../../contexts/AuthContext'
+import AuthLayout from '../../layouts/AuthLayout'
+import { getAuthErrorMessage } from '../../services/authService'
 
-const EMAIL_ALREADY_IN_USE_MESSAGE = 'Este e-mail já está cadastrado. Tente entrar em vez de criar uma nova conta.'
 const GENERIC_ERROR_MESSAGE = 'Não foi possível criar sua conta agora. Tente novamente em instantes.'
 
 function RegisterPage() {
@@ -26,8 +25,7 @@ function RegisterPage() {
       await register(name, email, password)
       navigate('/tasks', { replace: true })
     } catch (err) {
-      const errorCode = getErrorCode(err)
-      setError(errorCode === 'EMAIL_ALREADY_IN_USE' ? EMAIL_ALREADY_IN_USE_MESSAGE : GENERIC_ERROR_MESSAGE)
+      setError(getAuthErrorMessage(err, GENERIC_ERROR_MESSAGE))
     } finally {
       setIsSubmitting(false)
     }

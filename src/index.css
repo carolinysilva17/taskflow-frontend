@@ -1,21 +1,25 @@
 :root {
   color-scheme: light;
-  --surface: #f6f4ef;
-  --surface-raised: #ffffff;
-  --surface-sunken: #ece8de;
-  --border: #dcd6c8;
-  --border-strong: #c7c0ae;
-  --ink: #211e1a;
-  --ink-secondary: #5b564c;
-  --ink-muted: #8b857a;
-  --accent: #1b5e63;
-  --accent-hover: #164c50;
-  --accent-ink: #ffffff;
-  --accent-soft: #e3eeec;
-  --accent-soft-ink: #123f42;
+  --surface: #dedad2;
+  --surface-raised: #f8f5ee;
+  --surface-sunken: #cdc8ba;
+  --border: #c8c1b0;
+  --border-strong: #a89f8a;
+  --ink: #232019;
+  --ink-secondary: #6b665a;
+  --ink-muted: #8f8977;
+  --accent: #c07a1e;
+  --accent-hover: #a8690f;
+  --accent-ink: #241a06;
+  --accent-soft: #f3e6cd;
+  --accent-soft-ink: #6b4408;
   --danger: #b23a2e;
   --danger-soft: #f6e4e1;
   --danger-soft-ink: #7c2a21;
+
+  --nav-bg: #26241f;
+  --nav-ink: #f1ede3;
+  --nav-ink-secondary: #b7b0a0;
 
   --status-pending-bg: #edeae2;
   --status-pending-fg: #5b564c;
@@ -36,26 +40,26 @@
   --radius: 8px;
   --radius-sm: 5px;
 
-  --font-display: 'Fraunces', Georgia, 'Iowan Old Style', serif;
+  --font-display: 'Oswald', 'Arial Narrow', 'Helvetica Neue', sans-serif;
   --font-body: 'Public Sans', -apple-system, 'Segoe UI', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --surface: #15191a;
-    --surface-raised: #1d2224;
-    --surface-sunken: #101314;
-    --border: #2b3234;
-    --border-strong: #3a4245;
-    --ink: #edeae2;
-    --ink-secondary: #b7b2a6;
-    --ink-muted: #837e73;
-    --accent: #4fb3ae;
-    --accent-hover: #6fc4c0;
-    --accent-ink: #062120;
-    --accent-soft: #1c3937;
-    --accent-soft-ink: #9cdbd6;
+    --surface: #1c1a15;
+    --surface-raised: #262319;
+    --surface-sunken: #141310;
+    --border: #3a362a;
+    --border-strong: #4a4536;
+    --ink: #ede8db;
+    --ink-secondary: #b8b2a0;
+    --ink-muted: #8f8977;
+    --accent: #e0a04a;
+    --accent-hover: #e8b066;
+    --accent-ink: #201804;
+    --accent-soft: #3a2f1a;
+    --accent-soft-ink: #e8c690;
     --danger: #e2695a;
     --danger-soft: #3a211d;
     --danger-soft-ink: #f3b4aa;
@@ -101,22 +105,22 @@ h3,
 .brand-mark {
   font-family: var(--font-display);
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
   text-wrap: balance;
   margin: 0;
 }
 
 h1 {
-  font-size: 28px;
-  letter-spacing: -0.01em;
+  font-size: 26px;
 }
 
 h2 {
-  font-size: 20px;
-  letter-spacing: -0.005em;
+  font-size: 19px;
 }
 
 h3 {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 p {
@@ -147,9 +151,11 @@ button {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
   padding: 9px 16px;
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
@@ -255,6 +261,67 @@ input.invalid,
 textarea.invalid,
 select.invalid {
   border-color: var(--danger);
+}
+
+input[type='color'] {
+  width: 48px;
+  height: 36px;
+  padding: 2px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  cursor: pointer;
+}
+
+/* ---------- banners ---------- */
+.banner-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--danger-soft);
+  color: var(--danger-soft-ink);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+/* ---------- modal ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 100;
+}
+
+.modal-dialog {
+  background: var(--surface-raised);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal-dialog h2 {
+  margin-bottom: 12px;
+}
+
+.modal-dialog p {
+  color: var(--ink-secondary);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
 }
 
 /* ---------- pills (status/priority das tarefas) ---------- */
